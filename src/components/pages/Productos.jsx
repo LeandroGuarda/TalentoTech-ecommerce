@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { CartContext } from './CartContext'; // Asegúrate de que la ruta sea correcta
 import ModalAgregarAlCarrito from '../ModalCarrito'; // Asegurate que esté bien importado
 
-const Productos = ({ setCart }) => {
+const Productos = () => {
+
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { setCart } = useContext(CartContext); // Obtenemos el carrito y la función para actualizarlo
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -18,6 +21,8 @@ const Productos = ({ setCart }) => {
         setLoading(false);
       });
   }, []);
+
+
 
   const agregarAlCarrito = (producto) => {
     setCart((prevCart) => [...prevCart, producto]);

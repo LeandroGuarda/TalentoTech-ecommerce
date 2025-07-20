@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { CartContext } from './pages/CartContext';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { BsCart3 } from 'react-icons/bs';
+
 
 const navItems = [
   { name: "Inicio", path: "/" },
   { name: "Contacto", path: "/contacto" },
   { name: "Sobre nosotros", path: "/sobre-nosotros" },
   { name: "Servicios", path: "/servicios" },
+  { name: "Administración", path: "/login" }
 ];
 
-const NavBar = ({ cartCount = 0 }) => {
+const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+ const { cart } = useContext(CartContext); // Obtenemos el carrito desde el contexto
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
@@ -52,9 +55,9 @@ const NavBar = ({ cartCount = 0 }) => {
           {/* Carrito */}
           <Link to="/carrito" className="relative">
             <BsCart3 className="text-2xl hover:text-[#8245ec] transition-colors" />
-            {cartCount > 0 && (
+            {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {cartCount}
+                {cart.length}
               </span>
             )}
           </Link>

@@ -1,8 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-const Carrito = ({ cart }) => {
+import React, { useContext } from 'react';
+import { CartContext } from './CartContext'; // 
+const Carrito = () => {
+  const { cart, setCart } = useContext(CartContext); // obtenemos el carrito y la función para actualizarlo
   const total = cart.reduce((acc, item) => acc + item.price, 0);
+
+  const eliminarDelCarrito = (index) => {
+    const nuevoCarrito = [...cart];        // copiamos el array actual
+    nuevoCarrito.splice(index, 1);         // eliminamos el item en la posición
+    setCart(nuevoCarrito);                 // actualizamos el estado del carrito
+  };
+
+  
 
   return (
     <div className="p-6">
@@ -19,6 +27,12 @@ const Carrito = ({ cart }) => {
                 <h3 className="font-semibold">{item.title}</h3>
                 <p className="text-sm text-gray-600">${item.price}</p>
               </div>
+              <button
+                onClick={() => eliminarDelCarrito(index)}
+                className="text-red-600 hover:text-red-800"
+              >
+                Borrar
+              </button>
             </div>
           ))}
 
