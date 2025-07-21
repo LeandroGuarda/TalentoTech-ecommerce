@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext'; // Importa el contexto de autenticación
 
 const Login = () => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setIsLogged } = useAuth(); // 👈
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user === 'admin' && password === '1234') {
-      navigate('/carrito'); // Redirige a la página de administración
+      setIsLogged(true); // 👈 setea login global
+      navigate('/ofertas'); // Redirige a la página de ofertas
     } else {
       alert('Usuario o contraseña incorrectos');
     }
